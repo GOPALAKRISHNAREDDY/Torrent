@@ -52,8 +52,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean permDialogIsShow = false;
     MainFragment mainFragment;
-    private FirebaseAnalytics mFirebaseAnalytics;
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -83,8 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         FragmentManager fm = getSupportFragmentManager();
         mainFragment = (MainFragment)fm.findFragmentById(R.id.main_fragmentContainer);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        Fabric.with(this, new Crashlytics());
+        
     }
 
     @Override
