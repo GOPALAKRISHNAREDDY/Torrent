@@ -1,6 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android' // apply kotlin android plugin
 apply plugin: 'kotlin-android-extensions'
 
