@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp">
+
+    <RelativeLayout
+        android:id="@+id/port_heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#333333"
+        android:layout_marginBottom="9dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Port Settings"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textAllCaps="false"
+            android:textColor="#acd38b"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/port_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/port_heading"
+        android:padding="12dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/random_port"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:checked="true"
+            android:enabled="true"
+            android:text="Use Random Port" />
+
+        <EditText
+            android:id="@+id/port_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:digits="0123456789"
+            android:gravity="center"
+            android:hint="port number"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_below="@+id/port_layout"
+        android:background="@drawable/custombattery_button_background"
+        android:paddingTop="3dp"
+        android:paddingLeft="2dp"
+        android:paddingStart="2dp"
+        android:paddingRight="2dp"
+        android:paddingEnd="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:paddingBottom="3dp"
+        android:gravity="fill_horizontal">
+        <Button
+            android:id="@+id/port_cancel"
+            android:layout_width="119dp"
+            android:layout_height="39dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:layout_margin="0dp"
+            android:text="Cancel"
+            android:paddingLeft="30dp"
+            android:drawablePadding="-20dp"
+            style="?android:attr/buttonBarButtonStyle"/>
+        <Button
+            android:id="@+id/port_apply"
+            android:layout_width="139dp"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:background="@drawable/custom_battery_apply_background"
+            android:layout_margin="0dp"
+            android:text="Apply"
+            android:paddingLeft="19dp"
+            android:textColor="#ffffff"
+            android:drawableTint="#ffffff"
+            android:drawablePadding="0dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

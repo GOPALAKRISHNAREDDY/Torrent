@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- NOTE: this file has sadly to be duplicated across application IDs,
+     as using a resource for targetPackage does not work -->
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_add"
+        android:shortcutId="addTorrent"
+        android:shortcutLongLabel="@string/add_torrent_title"
+        android:shortcutShortLabel="@string/add_torrent_title">
+        <intent
+            android:action="in.gopalakrishnareddy.torrent.ADD_TORRENT_SHORTCUT"
+            android:targetClass="in.gopalakrishnareddy.torrent.MainActivity"
+            android:targetPackage="in.gopalakrishnareddy.torrent" />
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_shortcut_rss_feed"
+        android:shortcutId="addShortcut"
+        android:shortcutLongLabel="@string/add_feed_channel"
+        android:shortcutShortLabel="@string/add_feed_channel">
+        <intent
+            android:action="in.gopalakrishnareddy.torrent.ADD_CHANNEL_SHORTCUT"
+            android:targetClass="in.gopalakrishnareddy.torrent.FeedActivity"
+            android:targetPackage="in.gopalakrishnareddy.torrent" />
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,75 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="Pro">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="save_battery"
+            android:layout="@layout/pro_custom_switchpreference"
+            android:title="@string/battery_saver"
+            android:summary="@string/battery_saver_summary"/>
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_shutdown_downloads_complete"
+            android:singleLine="false"
+            android:layout="@layout/pro_custom_switchpreference"
+            android:singleLineTitle="false"
+            android:summary="@string/battery_shutdown_summary"
+            android:title="@string/battery_shutdown_title" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_sequential_download"
+            android:singleLine="false"
+            android:singleLineTitle="false"
+            android:layout="@layout/pro_custom_switchpreference"
+            android:summary="By Enabling You Can Find Sequential Download Option In Torrent"
+            android:title="@string/sequential_download" />
+
+        <Preference
+            android:key="advanced"
+            android:layout="@layout/pro_custom_preference"
+            android:title="@string/advanced_features_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Bandwidth">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:layout="@layout/non_pro_custom_switchpreference"
+            android:key="@string/pref_key_wifi_only"
+            android:title="@string/pref_wifi_only_title"
+            android:summary="@string/pref_wifi_only_summary" />
+
+        <EditTextPreference
+            android:key="@string/pref_key_max_download_speed"
+            android:title="@string/pref_max_download_speed_title"
+            android:inputType="numberDecimal"
+            android:persistent="false" />
+
+        <EditTextPreference
+            android:key="@string/pref_key_max_upload_speed"
+            android:title="@string/pref_max_upload_speed_title"
+            android:inputType="numberDecimal"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Others">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_autostart"
+        android:layout="@layout/non_pro_custom_switchpreference"
+        android:title="@string/pref_autostart_title"
+        android:summary="@string/pref_autostart_summary" />
+
+        <Preference
+            android:key="port_settings"
+            android:title="Incoming Port"
+            android:summary="You Can Change Port Here"/>
+
+        <Preference
+            android:key="about"
+            android:title="About"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

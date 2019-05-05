@@ -1,0 +1,125 @@
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android' // apply kotlin android plugin
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "in.gopalakrishnareddy.torrent"
+        minSdkVersion 15
+        /* Officially Android Jelly Bean (< 4.4) support is dropped in libtorrent4j */
+        targetSdkVersion 28
+        versionCode 1 //11
+        /*
+         * Convection:
+         *  major.minor.[revision][-some_info]
+         */
+        versionName "Beta" //1.9.1
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            /*applicationIdSuffix ".debug"
+            versionNameSuffix "-DEBUG"
+
+            testCoverageEnabled true
+            debuggable true*/
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            universalApk true
+        }
+    }
+
+    project.ext.versionCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2, 'x86': 3, 'x86_64': 4]
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            output.versionCodeOverride =
+                    project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1000000 + android.defaultConfig.versionCode
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
+def LIBTORRENT4J_VERSION = '1.2.0.20-RC3'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+        transitive = true
+    }
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-invites:16.1.0'
+    implementation 'com.google.firebase:firebase-ads:17.1.3'
+    implementation 'com.google.firebase:firebase-firestore:18.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.vectordrawable:vectordrawable:1.1.0-alpha01'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    /* Standard Android Support libs */
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.preference:preference:1.0.0'
+    implementation 'androidx.legacy:legacy-preference-v14:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha03'
+
+    /* Don't use Commons IO >= 2.6, because they uses Java NIO, supported only from API 26 */
+    implementation 'commons-io:commons-io:2.5'
+    implementation 'ch.acra:acra:4.11'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.takisoft.preferencex:preferencex:1.0.0'
+    implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
+    implementation 'com.github.clans:fab:1.6.4'
+    implementation 'com.github.yukuku:ambilwarna:2.0.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'net.java.dev.jna:jna:4.5.2@aar'
+    implementation project(':CircleProgressBar')
+    //implementation project(':fluid-slider')
+    //implementation 'com.ramotion.fluidslider:fluid-slider:0.3.1' //seekbar
+
+    /* libtorrent wrapper */
+    implementation 'org.libtorrent4j:libtorrent4j:' + LIBTORRENT4J_VERSION
+    implementation 'org.libtorrent4j:libtorrent4j-android-arm:' + LIBTORRENT4J_VERSION
+    implementation 'org.libtorrent4j:libtorrent4j-android-arm64:' + LIBTORRENT4J_VERSION
+    implementation 'org.libtorrent4j:libtorrent4j-android-x86:' + LIBTORRENT4J_VERSION
+    implementation 'org.libtorrent4j:libtorrent4j-android-x86_64:' + LIBTORRENT4J_VERSION
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}

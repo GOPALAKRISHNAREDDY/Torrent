@@ -1,0 +1,188 @@
+/*
+ * Copyright (C) 2016, 2017 Yaroslav Pronin <proninyaroslav@mail.ru>
+ *
+ * This file is part of LibreTorrent.
+ *
+ * LibreTorrent is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * LibreTorrent is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with LibreTorrent.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package in.gopalakrishnareddy.torrent;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import in.gopalakrishnareddy.torrent.core.utils.Utils;
+import in.gopalakrishnareddy.torrent.fragments.DetailTorrentFragment;
+import in.gopalakrishnareddy.torrent.fragments.FragmentCallback;
+import in.gopalakrishnareddy.torrent.fragments.MainFragment;
+import in.gopalakrishnareddy.torrent.receivers.NotificationReceiver;
+import in.gopalakrishnareddy.torrent.services.TorrentTaskService;
+import in.gopalakrishnareddy.torrent.settings.SettingsManager;
+import io.fabric.sdk.android.Fabric;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity
+        implements
+        FragmentCallback,
+        DetailTorrentFragment.Callback
+{
+    @SuppressWarnings("unused")
+    private static final String TAG = MainActivity.class.getSimpleName();
+
+    private static final String TAG_PERM_DIALOG_IS_SHOW = "perm_dialog_is_show";
+    public static final String ACTION_ADD_TORRENT_SHORTCUT = "in.gopalakrishnareddy.torrent.ADD_TORRENT_SHORTCUT";
+
+    private boolean permDialogIsShow = false;
+    MainFragment mainFragment;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        setTheme(Utils.getAppTheme(getApplicationContext()));
+        super.onCreate(savedInstanceState);
+
+        if (getIntent().getAction() != null &&
+            getIntent().getAction().equals(NotificationReceiver.NOTIFY_ACTION_SHUTDOWN_APP))
+        {
+            finish();
+
+            return;
+        }
+
+        if (savedInstanceState != null)
+            permDialogIsShow = savedInstanceState.getBoolean(TAG_PERM_DIALOG_IS_SHOW);
+
+        if (!Utils.checkStoragePermission(getApplicationContext()) && !permDialogIsShow) {
+            permDialogIsShow = true;
+            startActivity(new Intent(this, RequestPermissions.class));
+        }
+
+        startService(new Intent(this, TorrentTaskService.class));
+
+        setContentView(R.layout.activity_main);
+        Utils.showColoredStatusBar_KitKat(this);
+
+        FragmentManager fm = getSupportFragmentManager();
+        mainFragment = (MainFragment)fm.findFragmentById(R.id.main_fragmentContainer);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Fabric.with(this, new Crashlytics());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(TAG_PERM_DIALOG_IS_SHOW, permDialogIsShow);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        SharedPreferences pref = SettingsManager.getPreferences(this);
+        if (isFinishing() && !pref.getBoolean(getString(R.string.pref_key_keep_alive),
+                                              SettingsManager.Default.keepAlive)) {
+            Intent i = new Intent(getApplicationContext(), TorrentTaskService.class);
+            i.setAction(TorrentTaskService.ACTION_SHUTDOWN);
+            startService(i);
+        }
+    }
+
+    /*
+     * Changed in detail fragment.
+     */
+
+    @Override
+    public void onTorrentInfoChanged()
+    {
+        if (mainFragment == null)
+            return;
+
+        DetailTorrentFragment fragment = mainFragment.getCurrentDetailFragment();
+        if (fragment != null)
+            fragment.onTorrentInfoChanged();
+    }
+
+    @Override
+    public void onTorrentInfoChangesUndone()
+    {
+        if (mainFragment == null)
+            return;
+
+        DetailTorrentFragment fragment = mainFragment.getCurrentDetailFragment();
+        if (fragment != null)
+            fragment.onTorrentInfoChangesUndone();
+    }
+
+    @Override
+    public void onTorrentFilesChanged()
+    {
+        if (mainFragment == null)
+            return;
+
+        DetailTorrentFragment fragment = mainFragment.getCurrentDetailFragment();
+        if (fragment != null)
+            fragment.onTorrentFilesChanged();
+    }
+
+    @Override
+    public void onTrackersChanged(ArrayList<String> trackers, boolean replace)
+    {
+        if (mainFragment == null)
+            return;
+
+        DetailTorrentFragment fragment = mainFragment.getCurrentDetailFragment();
+        if (fragment != null)
+            fragment.onTrackersChanged(trackers, replace);
+    }
+
+    @Override
+    public void openFile(String relativePath)
+    {
+        if (mainFragment == null)
+            return;
+
+        DetailTorrentFragment fragment = mainFragment.getCurrentDetailFragment();
+        if (fragment != null)
+            fragment.openFile(relativePath);
+    }
+
+    @Override
+    public void fragmentFinished(Intent intent, ResultCode code)
+    {
+        switch (code) {
+            case OK:
+                Intent i = new Intent(getApplicationContext(), TorrentTaskService.class);
+                i.setAction(TorrentTaskService.ACTION_SHUTDOWN);
+                startService(i);
+                finish();
+                break;
+            case CANCEL:
+            case BACK:
+                if (mainFragment != null)
+                    mainFragment.resetCurOpenTorrent();
+                break;
+        }
+    }
+}

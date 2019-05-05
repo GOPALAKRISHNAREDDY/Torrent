@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="0dp">
+
+    <RelativeLayout
+        android:id="@+id/heading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#333333"
+        android:layout_marginBottom="9dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Battery Saver"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textAllCaps="false"
+            android:textColor="#acd38b"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/saveBattery_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:padding="12dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/saveBattery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:checked="true"
+            android:enabled="true"
+            android:text="Save Battery" />
+
+    <Switch
+        android:id="@+id/custom_Battery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:checked="false"
+        android:layout_marginBottom="12dp"
+        android:text="Custom Battery Percentage" />
+
+        <TextView
+            android:id="@+id/seekBar_perc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:paddingTop="4dp"
+            android:textSize="12sp"
+            android:textColor="#ffffff"
+            android:background="@drawable/battery_perc_background"
+            android:layout_marginBottom="16dp"
+            android:text="15%"
+            android:visibility="visible"/>
+    <SeekBar
+        android:id="@+id/battery_seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultFocusHighlightEnabled="true"
+        android:min="5"
+        android:max="100"
+        android:progress="15"
+        android:visibility="visible"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:textSize="12sp"
+            android:text="Save Power. Suspend Torrents When Battery Is Lower Than ..."/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_below="@+id/saveBattery_layout"
+        android:background="@drawable/custombattery_button_background"
+        android:paddingTop="3dp"
+        android:paddingLeft="2dp"
+        android:paddingStart="2dp"
+        android:paddingRight="2dp"
+        android:paddingEnd="2dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:paddingBottom="3dp"
+        android:gravity="fill_horizontal">
+        <Button
+            android:id="@+id/battery_cancel"
+            android:layout_width="119dp"
+            android:layout_height="39dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:layout_margin="0dp"
+            android:text="Cancel"
+            android:paddingLeft="30dp"
+            android:drawablePadding="-20dp"
+            style="?android:attr/buttonBarButtonStyle"/>
+        <Button
+            android:id="@+id/battery_apply"
+            android:layout_width="139dp"
+            android:layout_height="39dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:background="@drawable/custom_battery_apply_background"
+            android:layout_margin="0dp"
+            android:text="Apply"
+            android:paddingLeft="19dp"
+            android:textColor="#ffffff"
+            android:drawableTint="#ffffff"
+            android:drawablePadding="0dp" />
+    </RelativeLayout>
+
+</RelativeLayout>
