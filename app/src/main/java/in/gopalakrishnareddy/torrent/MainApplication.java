@@ -30,7 +30,6 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 import org.greenrobot.eventbus.EventBus;
 import in.gopalakrishnareddy.torrent.core.utils.Utils;
-import io.fabric.sdk.android.Fabric;
 
 @ReportsCrashes(mailTo = "proninyaroslav@mail.ru",
                 mode = ReportingInteractionMode.DIALOG,
