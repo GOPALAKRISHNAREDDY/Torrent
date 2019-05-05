@@ -48,9 +48,7 @@
                 android:value="in.gopalakrishnareddy.torrent.MainActivity" />
         </activity>
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-4373974258476427~9553478042" />
+        
 
         <activity android:name=".MainActivity">
             <intent-filter>
