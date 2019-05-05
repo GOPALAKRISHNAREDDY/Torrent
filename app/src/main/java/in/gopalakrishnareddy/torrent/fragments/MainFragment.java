@@ -31,9 +31,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import androidx.fragment.app.Fragment;
@@ -165,19 +162,13 @@ public class MainFragment extends Fragment
     private Intent prevImplIntent;
     private SharedPreferences pref;
     private Throwable sentError;
-    private AdView mAdView;
-
+    
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         //coordinatorLayout = v.findViewById(R.id.main_coordinator_layout);
-        mAdView = (AdView) v.findViewById(R.id.adView);
-        if (BuildConfig.DEBUG){
-            MobileAds.initialize(getActivity(), "ca-app-pub-3940256099942544/5224354917");}
-        else { MobileAds.initialize(getActivity(), "ca-app-pub-4373974258476427~9553478042");} //original
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
         return v;
     }
 
