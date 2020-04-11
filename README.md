@@ -28,9 +28,9 @@ Already implemented features (help is highly desired!):
 
 License
 
-Copyright (C) 2016 Kovvuri Gopala Krishna Reddy <reckoner.gopalakrishnareddy@datamail.in>
+Copyright (C) 2016 Kovvuri Gopala Krishna Reddy <torrent@datamail.in>
 This file is part of Torrent Pro.
-LibreTorrent is free software: you can redistribute it and/or modify
+Torrent Pro is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
